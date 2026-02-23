@@ -8,6 +8,8 @@ void setup()
   Serial.begin(9600);
   rm.begin(2,3,4);
   Serial.print("init");
+
+  rm._rooms[7]->setEntrance();
 }
 
 void loop() 

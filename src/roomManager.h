@@ -10,8 +10,8 @@ private:
 
     int _dataPin, _clockPin, _latchPin;
     byte _floor[COUNT_FLOOR];
-    Room* _rooms[COUNT_ROOMS];
 public:
+    Room* _rooms[COUNT_ROOMS];
     RoomManager();
     void begin(int dataPin, int clockPin, int latchPin);
     void addRoom(Room* room);
