@@ -2,11 +2,15 @@
 
 RoomManager::RoomManager()
 {
-    for (int i = 0; i < COUNT_ROOMS; i++)
-        _rooms[i] = nullptr;
-
-    _floor[0] = 0;
-    _floor[1] = 0;
+    for (unsigned i = 0; i < COUNT_ROOMS; i++)
+    {
+         _rooms[i] = nullptr;
+    }
+    
+    for (unsigned i = 0; i < COUNT_FLOOR; i++)
+    {
+        _floor[i] = 0;
+    }
 }
 
 void RoomManager::begin(int dataPin, int clockPin, int latchPin)
@@ -18,6 +22,11 @@ void RoomManager::begin(int dataPin, int clockPin, int latchPin)
     pinMode(dataPin, OUTPUT);
     pinMode(clockPin, OUTPUT);
     pinMode(latchPin, OUTPUT);
+
+    for(unsigned i = 0; i < COUNT_ROOMS; i++)
+    {
+        addRoom(new Room(i));
+    }
 }
 
 void RoomManager::addRoom(Room* room)
@@ -30,7 +39,7 @@ void RoomManager::addRoom(Room* room)
 void RoomManager::update()
 {
     bool needUpdate = false;
-    for(int i = 0; i < COUNT_ROOMS; i++)
+    for(unsigned i = 0; i < COUNT_ROOMS; i++)
     {
         if (_rooms[i] == nullptr) continue;
 
@@ -65,7 +74,7 @@ void RoomManager::update()
 void RoomManager::updateLight()
 {
     digitalWrite(_latchPin, LOW);
-    for (int i = 0; i < COUNT_FLOOR; i++) 
+    for (unsigned i = 0; i < COUNT_FLOOR; i++) 
     {
         shiftOut(_dataPin, _clockPin, LSBFIRST, _floor[i]);
     }

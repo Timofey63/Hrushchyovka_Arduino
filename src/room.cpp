@@ -1,8 +1,6 @@
 #include <room.h>
 #include <Arduino.h>
 
-Room::Room(){}
-
 Room::Room(int pos)
 {
     position = pos;

@@ -7,7 +7,6 @@ private:
 public:
     bool isActive;
     unsigned position;
-    Room();
     Room(int pos);
     void on();
     void off();

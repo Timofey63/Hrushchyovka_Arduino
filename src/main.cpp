@@ -1,19 +1,12 @@
 #include <Arduino.h>
 #include <roomManager.h>
 
-RoomManager rm;
+RoomManager rm;//16 rooms
 
 void setup() 
 {
   Serial.begin(9600);
-  
   rm.begin(2,3,4);
-
-  for(int i = 0; i < 16; i++)
-  {
-    rm.addRoom(new Room(i));
-  }
-
   Serial.print("init");
 }
 
