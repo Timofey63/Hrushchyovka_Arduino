@@ -5,7 +5,7 @@ Room::Room(int pos)
 {
     position = pos;
     off();
-    mode = FLAT;
+    _mode = FLAT;
     lastGlow = 0;
     timeGlow = random(1000, 3000);
 }
@@ -24,7 +24,7 @@ void Room::update()
 {
     unsigned long currentTime = millis();
     
-    if(mode == FLAT)
+    if(_mode == FLAT)
     {
         if(currentTime - lastGlow >= timeGlow)
         {
@@ -34,7 +34,7 @@ void Room::update()
             timeGlow = random(30000, 300000);
         }
     }
-    if(mode == ENTRANCE)
+    if(_mode == ENTRANCE)
     {
         if (currentTime - lastGlow >= timeGlow)
         {
@@ -42,12 +42,37 @@ void Room::update()
             lastGlow = currentTime;
         }
     }
+
+    if(_mode == BLINK)
+    {
+        if(currentTime - lastBlink >= timeBlink)
+        {
+            isActive = !isActive;
+            lastBlink = currentTime;
+        }
+
+        // if(currentTime - lastGlow >= timeGlow)
+        // {
+        //     isActive = !isActive;
+        //     lastGlow = currentTime;
+        
+        //     timeGlow = random(30000, 300000);
+        // }
+    }
     
 }
 
-void Room::setEntrance()
+void Room::setRoomMode(int time, RoomMode mode)
 {
-    mode = ENTRANCE;
-    isActive = true;
-    timeGlow = 30;
+    _mode = mode;
+
+    if(mode == ENTRANCE)
+    {
+        isActive = true;
+        timeGlow = time;
+    }
+    if(mode == BLINK)
+    {
+        timeBlink = time;
+    }
 }

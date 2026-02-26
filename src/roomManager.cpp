@@ -1,14 +1,16 @@
 #include <roomManager.h>
 
-RoomManager::RoomManager()
+RoomManager::RoomManager(int countFloor)
 {
-    for (unsigned i = 0; i < COUNT_ROOMS; i++)
-    {
-         _rooms[i] = nullptr;
-    }
+    _countFloor = countFloor;
+    _countRooms = _countFloor * 8;
     
-    for (unsigned i = 0; i < COUNT_FLOOR; i++)
+    _rooms = new Room*[_countRooms];
+    _floor = new byte[_countFloor];
+
+    for (unsigned i = 0; i < _countRooms; i++)
     {
+        _rooms[i] = nullptr;
         _floor[i] = 0;
     }
 }
@@ -23,7 +25,7 @@ void RoomManager::begin(int dataPin, int clockPin, int latchPin)
     pinMode(clockPin, OUTPUT);
     pinMode(latchPin, OUTPUT);
 
-    for(unsigned i = 0; i < COUNT_ROOMS; i++)
+    for(unsigned i = 0; i < _countRooms; i++)
     {
         addRoom(new Room(i));
     }
@@ -31,7 +33,7 @@ void RoomManager::begin(int dataPin, int clockPin, int latchPin)
 
 void RoomManager::addRoom(Room* room)
 {
-    if (room->position < 0 || room->position >= COUNT_ROOMS) return;
+    if (room->position < 0 || room->position >= _countRooms) return;
     _rooms[room->position] = room;
 }
 
@@ -39,7 +41,7 @@ void RoomManager::addRoom(Room* room)
 void RoomManager::update()
 {
     bool needUpdate = false;
-    for(unsigned i = 0; i < COUNT_ROOMS; i++)
+    for(unsigned i = 0; i < _countRooms; i++)
     {
         if (_rooms[i] == nullptr) continue;
 
@@ -74,9 +76,19 @@ void RoomManager::update()
 void RoomManager::updateLight()
 {
     digitalWrite(_latchPin, LOW);
-    for (unsigned i = 0; i < COUNT_FLOOR; i++) 
+    for (unsigned i = 0; i < _countFloor; i++) 
     {
         shiftOut(_dataPin, _clockPin, LSBFIRST, _floor[i]);
     }
     digitalWrite(_latchPin, HIGH);
+}
+
+void RoomManager::setEntrance(int index, int time)
+{
+    _rooms[index]->setRoomMode(time, ENTRANCE);
+}
+
+void RoomManager::setIntensity(int index, int time)
+{
+    _rooms[index]->setRoomMode(time, BLINK);
 }

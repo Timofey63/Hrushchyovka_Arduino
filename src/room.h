@@ -4,7 +4,8 @@
 enum RoomMode
 {
     FLAT,   
-    ENTRANCE
+    ENTRANCE,
+    BLINK
 };
 
 class Room
@@ -12,7 +13,7 @@ class Room
 private:
 public:
     
-    RoomMode mode;
+    RoomMode _mode;
     bool isActive;
     unsigned position;
     Room(int pos);
@@ -23,5 +24,8 @@ public:
     unsigned timeGlow;
     unsigned long lastGlow;
 
-    void setEntrance();
+    unsigned timeBlink;
+    unsigned long lastBlink;
+
+    void setRoomMode(int time, RoomMode mode);
 };

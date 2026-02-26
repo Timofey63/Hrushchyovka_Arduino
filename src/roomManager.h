@@ -5,18 +5,20 @@
 class RoomManager
 {
 private:
-    static const int COUNT_FLOOR = 2;
-    static const unsigned COUNT_ROOMS = COUNT_FLOOR * 8;
+    unsigned _countFloor;
+    unsigned _countRooms;
 
     int _dataPin, _clockPin, _latchPin;
-    byte _floor[COUNT_FLOOR];
+    byte* _floor;
+    Room** _rooms;
 public:
-    Room* _rooms[COUNT_ROOMS];
-    RoomManager();
+    RoomManager(int countFloor);
     void begin(int dataPin, int clockPin, int latchPin);
     void addRoom(Room* room);
     void update();
     void updateLight();
+    void setEntrance(int index, int time);
+    void setIntensity(int index, int time);
 };
 
 

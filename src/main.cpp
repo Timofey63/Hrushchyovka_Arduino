@@ -1,15 +1,15 @@
 #include <Arduino.h>
 #include <roomManager.h>
 
-RoomManager rm;//16 rooms
+RoomManager rm(2);
 
 void setup() 
 {
   Serial.begin(9600);
   rm.begin(2,3,4);
-  Serial.print("init");
 
-  rm._rooms[7]->setEntrance();
+  rm.setEntrance(7, 50);
+  rm.setIntensity(8, 10);
 }
 
 void loop() 
