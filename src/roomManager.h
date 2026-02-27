@@ -19,6 +19,8 @@ public:
     void updateLight();
     void setEntrance(int index, int time);
     void setIntensity(int index, int time);
+
+    void setRandTime(unsigned, unsigned);
 };
 
 

@@ -29,6 +29,8 @@ void RoomManager::begin(int dataPin, int clockPin, int latchPin)
     {
         addRoom(new Room(i));
     }
+
+    setRandTime(1000, 3000);
 }
 
 void RoomManager::addRoom(Room* room)
@@ -52,7 +54,7 @@ void RoomManager::update()
         int bitPosition = i % 8;
 
         
-        if(room->isActive)
+        if(room->getActive())
         {
            if (!(currentFloor & (1 << bitPosition))) {
                 _floor[floorIndex] = currentFloor | (1 << bitPosition);
@@ -91,4 +93,12 @@ void RoomManager::setEntrance(int index, int time)
 void RoomManager::setIntensity(int index, int time)
 {
     _rooms[index]->setRoomMode(time, BLINK);
+}
+
+void RoomManager::setRandTime(unsigned minTimeLight, unsigned maxTimeLight)
+{
+    for(unsigned i = 0; i < _countRooms; i++)
+    {
+        _rooms[i]->setRandTime(minTimeLight, maxTimeLight);
+    }
 }

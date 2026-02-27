@@ -14,7 +14,8 @@ private:
 public:
     
     RoomMode _mode;
-    bool isActive;
+    bool isActive, baseActive;
+    bool getActive();
     unsigned position;
     Room(int pos);
     void on();
@@ -28,4 +29,7 @@ public:
     unsigned long lastBlink;
 
     void setRoomMode(int time, RoomMode mode);
+
+    unsigned _minTimeLight, _maxTimeLight;
+    void setRandTime(unsigned, unsigned);
 };
