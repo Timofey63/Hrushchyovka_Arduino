@@ -7,6 +7,7 @@ Room::Room(int pos)
     off();
     _mode = FLAT;
     lastGlow = 0;
+    isActive = random(2) == 1;
 }
 
 void Room::on()
